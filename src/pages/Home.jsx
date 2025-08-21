@@ -23,7 +23,7 @@ const Home = () => {
   console.log("posts", posts);
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 mx-auto  sm:mx-4">
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 mx-4  sm:mx-4 mt-16">
       {posts.map(post => (
         <PostCard key={post.id} post={post} />
       ))}
