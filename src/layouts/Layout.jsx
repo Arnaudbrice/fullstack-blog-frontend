@@ -6,7 +6,7 @@ import { Bounce, ToastContainer } from "react-toastify";
 
 const Layout = () => {
   return (
-    <>
+    <> 
       <div>
         <Header />
 

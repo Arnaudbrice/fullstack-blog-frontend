@@ -8,7 +8,7 @@ import { Route, Routes } from "react-router";
 const App = () => {
   return (
     <div
-      className="min-h-screen w-full grid grid-rows-[auto_1fr_auto]
+      className="min-h-screen bg-gradient-to-r from-blue-200 via-gray-200 to-yellow-100 w-full grid grid-rows-[auto_1fr_auto]
         font-['Outfit']  "
     >
       <Routes>
