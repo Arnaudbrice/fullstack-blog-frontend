@@ -1,19 +1,40 @@
 import React from "react";
 import { Link } from "react-router";
 
-const Header = () => {
+  const Header = () => {
   return (
-    <div>
-      <h1 className="text-4xl font-bold text-center text-primary">
-        <Link to="/">Home</Link>MasterBlog
-      </h1>
-      <nav>
-        <ul className="flex justify-center gap-4 text-xl">
-          <Link to="/">Home</Link>
-          <Link to="/posts">Create Post</Link>
-        </ul>
+    <header className="shadow-md">
+     
+      <div className="text-center py-6">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
+          MasterBlog
+        </h1>
+      </div>
+
+  
+      <nav className="bg-gradient-to-r from-yellow-100 via-[#71565a] to-blue-200">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-center">
+          <ul className="flex gap-10 text-lg font-medium text-white">
+            <li>
+              <Link
+                to="/"
+                className="hover:text-red-400 transition-colors text-xl"
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/posts"
+                className="hover:text-red-400 transition-colors text-xl"
+              >
+                Create Post
+              </Link>
+            </li>
+          </ul>
+        </div>
       </nav>
-    </div>
+    </header>
   );
 };
 

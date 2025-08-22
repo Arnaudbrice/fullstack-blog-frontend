@@ -8,13 +8,12 @@ import { Route, Routes } from "react-router";
 const App = () => {
   return (
     <div
-      className="min-h-screen w-full grid grid-rows-[auto_1fr_auto]
+      className="min-h-screen bg-gradient-to-r from-blue-200 via-gray-200 to-yellow-100 w-full grid grid-rows-[auto_1fr_auto]
         font-['Outfit']  "
     >
       <Routes>
         <Route path="/" element={<Layout />}>
-          {/* Home , BlogDetail and NotFound will use the Layout component  to display Header , the component(Home, BlogDetail, NotFound) will be rendered inside the main component, and the Footer will be displayed at the bottom */}
-          <Route index element={<Home />} />
+         
           <Route path="/posts/:id" element={<PostDetail />} />
           <Route path="/posts" element={<CreatePost />} />
           <Route path="*" element={<NotFound />} />
