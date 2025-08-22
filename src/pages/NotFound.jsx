@@ -20,8 +20,6 @@ const NotFound = () => {
           Go Back Home
         </Link>
       </div>
-
-      <div className="mt-12 text-6xl">🛒</div>
     </div>
   );
 };
