@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import PostContext from "../contexts/postContext";
 import { toast } from "react-toastify";
 import { set } from "lodash";
+import NotFound from "./NotFound";
 
 const EditPost = () => {
   const baseUrl = "http://localhost:3000";
@@ -95,6 +96,9 @@ const EditPost = () => {
     console.log("handleEdit");
   };
 
+  if (!post.title || !post.content) {
+    return <NotFound />;
+  }
   return (
     <div>
       <button

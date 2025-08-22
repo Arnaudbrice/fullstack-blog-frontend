@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useNavigate, useParams } from "react-router";
 import PostContext from "../contexts/postContext";
 import { toast } from "react-toastify";
+import NotFound from "./NotFound";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -24,6 +25,9 @@ const PostDetail = () => {
     console.log("handleDelete");
   };
 
+  if (!post) {
+    return <NotFound />;
+  }
   if (toastMessage) {
     toast.success(toastMessage);
     setToastMessage("");
