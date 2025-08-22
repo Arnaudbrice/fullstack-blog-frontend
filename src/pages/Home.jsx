@@ -1,29 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import PostCard from "../components/PostCard";
+import PostContext from "../contexts/postContext";
+import { toast } from "react-toastify";
 
 const Home = () => {
-  const baseUrl = "http://localhost:3000";
-  const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${baseUrl}/posts`);
-        const data = await response.json();
-        console.log(data);
-        setPosts(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-    /*  const data=  fetchData();
-    setPosts(data); */
-  }, []);
+  const {
+    posts,
+    setPosts,
+    toastMessage,
+    setToastMessage,
+    toastShown,
+    setToastShown
+  } = useContext(PostContext);
 
-  console.log("posts", posts);
-
+  if (toastMessage) {
+    toast.success(toastMessage);
+    setToastMessage("");
+    setToastShown(true);
+  }
   return (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 mx-4  sm:mx-4 mt-16">
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 mx-4  sm:mx-4 mt-16  ">
       {posts.map(post => (
         <PostCard key={post.id} post={post} />
       ))}
