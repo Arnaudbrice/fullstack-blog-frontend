@@ -10,10 +10,17 @@ export const PostContextProvider = ({ children }) => {
   const [toastMessage, setToastMessage] = useState("");
 
   const [toastShown, setToastShown] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(`${baseUrl}/posts`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch posts");
+        }
 
         const data = await response.json();
         console.log(data);
@@ -21,6 +28,9 @@ export const PostContextProvider = ({ children }) => {
         setPosts(data);
       } catch (error) {
         console.log(error);
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -49,7 +59,11 @@ export const PostContextProvider = ({ children }) => {
         toastMessage,
         setToastMessage,
         toastShown,
-        setToastShown
+        setToastShown,
+        isLoading,
+        setIsLoading,
+        isError,
+        setIsError
       }}
     >
       {children}

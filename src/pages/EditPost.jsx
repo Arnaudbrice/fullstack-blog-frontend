@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import PostContext from "../contexts/postContext";
 import { toast } from "react-toastify";
-import { set } from "lodash";
+
 import NotFound from "./NotFound";
 
 const EditPost = () => {
@@ -15,7 +15,9 @@ const EditPost = () => {
     toastMessage,
     setToastMessage,
     toastShown,
-    setToastShown
+    setToastShown,
+    isLoading,
+    setIsLoading
   } = useContext(PostContext);
 
   console.log(id);
@@ -69,6 +71,9 @@ const EditPost = () => {
         })
       });
 
+      if (!response.ok) {
+        throw new Error("Failed to update post");
+      }
       // data here is an object with the updated post
       const data = await response.json();
       console.log(data);
@@ -90,15 +95,30 @@ const EditPost = () => {
     } catch (error) {
       console.log(error);
 
-      setToastMessage(error.message || "An error occurred");
+      // setToastMessage(error.message || "An error occurred");
+      toast.error(error.message || "An error occurred");
+      // setIsError(true);
+    } finally {
+      setIsLoading(false);
     }
-
-    console.log("handleEdit");
   };
 
-  if (!post.title || !post.content) {
-    return <NotFound />;
+  if (isLoading) {
+    return (
+      <div role="status" class="max-w-sm animate-pulse">
+        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5"></div>
+        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-2.5"></div>
+        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-2.5"></div>
+        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
+        <span class="sr-only">Loading...</span>
+      </div>
+    );
   }
+  // if (!post.title || !post.content) {
+  //   return <NotFound />;
+  // }
   return (
     <div>
       <button
