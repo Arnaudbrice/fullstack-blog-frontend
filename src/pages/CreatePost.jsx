@@ -69,10 +69,9 @@ const CreatePost = () => {
       console.log("created Post", data);
       // to display the toast message after navigation to the home page
 
+      setPosts([data, ...posts]);
       setToastMessage(`Post ${data.title} created successfully`);
       setToastShown(false);
-      setPosts([data, ...posts]);
-
       navigate("/");
     } catch (error) {
       console.log(error);

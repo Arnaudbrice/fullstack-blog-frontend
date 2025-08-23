@@ -10,15 +10,14 @@ const PostCard = props => {
         {props.post.title}
       </h2>
 
-      <div className="w-full">
+      <figure className="w-full">
         <img
-          className=" w-full h-auto block  aspect-square object-cover"
+          className="w-full aspect-square object-cover"
           src={props.post.cover}
           alt="cover"
         />
-      </div>
-
-      <p className="p-4 ">
+      </figure>
+      <p className="p-4 text-center">
         {props.post.content.substring(0, 10)}
         {"..."}{" "}
         <button
