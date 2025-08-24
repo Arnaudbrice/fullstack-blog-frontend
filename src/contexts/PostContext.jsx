@@ -18,6 +18,9 @@ export const PostContextProvider = ({ children }) => {
       try {
         const response = await fetch(`${baseUrl}/posts`);
 
+        // if (!response.length) {
+        //   return;
+        // }
         if (!response.ok) {
           throw new Error("Failed to fetch posts");
         }

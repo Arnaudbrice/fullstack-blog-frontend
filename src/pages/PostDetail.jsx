@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useNavigate, useParams } from "react-router";
-import PostContext from "../contexts/postContext";
+import PostContext from "../contexts/PostContext";
 import { toast } from "react-toastify";
 import NotFound from "./NotFound";
 

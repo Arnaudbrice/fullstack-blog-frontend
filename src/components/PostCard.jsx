@@ -18,7 +18,7 @@ const PostCard = props => {
         />
       </figure>
       <p className="p-4 text-center">
-        {props.post.content.substring(0, 10)}
+        {props.post.content?.substring(0, 10)}
         {"..."}{" "}
         <button
           className="btn btn-info text-white"
