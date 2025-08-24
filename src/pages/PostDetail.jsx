@@ -15,17 +15,22 @@ const PostDetail = () => {
     toastShown,
     setToastShown,
     isLoading,
-    setIsLoading
+    setIsLoading,
   } = useContext(PostContext);
   console.log(id);
   console.log("posts", posts);
   //+id , parseInt(id), Number(id)
-  const post = posts.find(post => post.id === Number(id));
+  const post = posts.find((post) => post.id === Number(id));
   console.log("post", post);
 
   //Delete the post:
   const handleDelete = () => {
-    console.log("handleDelete");
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      const updatedPosts = posts.filter((p) => p.id !== post.id);
+      setPosts(updatedPosts);
+      setToastMessage("Post deleted successfully");
+      navigate("/"); // return to homepage (/)
+    }
   };
 
   if (isLoading) {
@@ -49,36 +54,56 @@ const PostDetail = () => {
     setToastMessage("");
     setToastShown(true);
   }
+  const handleBack = () => {
+    navigate("/"); //return to homepage (/)
+  };
+
   return (
-    <div className="grid grid-cols-1  max-w-3xl  mt-16 py-4 border-2 border-black   rounded-lg mx-4 sm:mx-auto space-y-4 text-center ">
-      <h2 className="w-full text-xl font-bold truncate text-center p-4">
-        {post?.title}
-      </h2>
-      <figure className="w-full">
-        <img
-          className="w-full aspect-square object-cover"
-          src={post?.cover}
-          alt="cover"
-        />
-      </figure>
-
-      <p className="text-black">{post?.content}</p>
-
-      <div className="px-4 flex justify-between gap-4">
+    <div className="mt-16">
+      {/* Back button  */}
+      <div className="max-w-3xl mx-auto px-4">
         <button
-          onClick={() => navigate(`/posts/${id}/edit`)}
-          className="btn btn-warning btn-lg rounded-full"
-          type="button"
+          onClick={handleBack}
+          className="btn bg-gradient-to-r from-yellow-100 via-[#71565a] to-blue-200 mb-4"
         >
-          Edit
+          Back
         </button>
+      </div>
 
-        <button
-          className="btn btn-lg rounded-full  btn-secondary"
-          type="button"
-        >
-          Delete
-        </button>
+      {/* Post card  details */}
+      <div className="grid grid-cols-1 max-w-3xl mx-auto py-4 border-2 border-black rounded-lg space-y-4 text-center">
+        <h2 className="w-full text-xl font-bold truncate text-center p-4">
+          {post?.title}
+        </h2>
+        <figure className="w-full">
+          <img
+            className="w-full aspect-square object-cover"
+            src={post?.cover}
+            alt="cover"
+          />
+        </figure>
+
+        <p className="text-black">{post?.content}</p>
+
+        <div className="px-4 flex justify-between gap-4">
+          <button
+            onClick={() => navigate(`/posts/${id}/edit`)}
+            className="btn btn-warning btn-lg rounded-full"
+            type="button"
+          >
+            Edit
+          </button>
+          
+          
+      {/* Delete button */}
+          <button
+            onClick={handleDelete}
+            className="btn btn-lg rounded-full btn-secondary"
+            type="button"
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   );
