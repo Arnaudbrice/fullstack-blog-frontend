@@ -58,51 +58,54 @@ const PostDetail = () => {
     navigate("/"); //return to homepage (/)
   };
 
-  return (
-    <div className="mt-16">
-      {/* Back button  */}
-      <div className="max-w-3xl mx-auto px-4">
-        <button
-          onClick={handleBack}
-          className="btn bg-gradient-to-r from-yellow-100 via-[#71565a] to-blue-200 mb-4"
-        >
-          Back
-        </button>
-      </div>
+ return (
+   <div className="mt-16 flex justify-center">
+      <div className="max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden transition-transform duration-300 hover:scale-105 bg-white">
+        
+        {/* Title with gradient */}
+        <div className="w-full p-6 text-center bg-gradient-to-r from-yellow-100 via-[#71565a] to-blue-200">
+          <h2 className="text-3xl font-bold text-white">{post.title}</h2>
+        </div>
 
-      {/* Post card  details */}
-      <div className="grid grid-cols-1 max-w-3xl mx-auto py-4 border-2 border-black rounded-lg space-y-4 text-center">
-        <h2 className="w-full text-xl font-bold truncate text-center p-4">
-          {post?.title}
-        </h2>
+        {/* Image */}
         <figure className="w-full">
           <img
-            className="w-full aspect-square object-cover"
-            src={post?.cover}
+            src={post.cover}
             alt="cover"
+            className="w-full h-96 object-cover transition-transform duration-300 hover:scale-105"
           />
         </figure>
 
-        <p className="text-black">{post?.content}</p>
+        {/* Content */}
+        <div className="p-6 text-gray-700 text-lg leading-relaxed">
+          {post.content}
+        </div>
 
-        <div className="px-4 flex justify-between gap-4">
+        {/* Buttons */}
+        <div className="px-6 pb-6 flex justify-between gap-4">
           <button
             onClick={() => navigate(`/posts/${id}/edit`)}
-            className="btn btn-warning btn-lg rounded-full"
-            type="button"
+            className="flex-1 py-2 bg-yellow-400 hover:bg-yellow-500 text-white font-bold rounded-full shadow-md transition-colors duration-300"
           >
             Edit
           </button>
-          
-          
-      {/* Delete button */}
           <button
             onClick={handleDelete}
-            className="btn btn-lg rounded-full btn-secondary"
-            type="button"
+            className="flex-1 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-full shadow-md transition-colors duration-300"
           >
             Delete
           </button>
+        </div>
+
+        {/* Back Button */}
+        <div className="px-6 pb-6">
+          <button
+            onClick={handleBack}
+            className="w-full py-2 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded-lg shadow-md transition-transform duration-300"
+          >
+            Back
+         </button>
+
         </div>
       </div>
     </div>
