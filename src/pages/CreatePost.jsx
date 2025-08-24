@@ -1,7 +1,8 @@
 import React, { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import PostContext from "../contexts/postContext";
+
 import { toast } from "react-toastify";
+import PostContext from "../contexts/PostContext";
 
 const CreatePost = () => {
   const fileInputRef = useRef(null);
@@ -15,30 +16,25 @@ const CreatePost = () => {
     setToastShown
   } = useContext(PostContext);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [post, setPost] = useState({
     title: "",
     cover: "",
-    content: ""
+    content: null
   });
 
   const handleChange = event => {
-    const { name, type } = event.target;
-    // Handle file input differently from other inputs
+    const { name, type, value } = event.target;
     if (type === "file") {
       const file = event.target.files[0];
+
       if (file) {
-        const reader = new FileReader();
-        reader.onload = event => {
-          setPost(prev => ({
-            ...prev,
-            cover: event.target.result // base64 string
-          }));
-        };
-        reader.readAsDataURL(file);
+        setPost(prev => ({
+          ...prev,
+          cover: file
+        }));
       }
     } else {
-      // Handle all other inputs normally
-      const { value } = event.target;
       setPost(prev => ({
         ...prev,
         [name]: value
@@ -48,28 +44,37 @@ const CreatePost = () => {
 
   const handleCreate = async event => {
     event.preventDefault();
+    setIsSubmitting(true);
 
     try {
       if (!post.title || !post.content || !post.cover) {
         toast.error("Please fill all fields");
         return;
       }
+
+      const formData = new FormData();
+      formData.append("title", post.title);
+      formData.append("cover", post.cover); // Assuming post.cover is a File object
+      formData.append("content", post.content);
       const response = await fetch(`${baseUrl}/posts`, {
         method: "POST",
-        headers: {
+        /*  headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
           title: post.title,
           cover: post.cover,
           content: post.content
-        })
+        }) */
+        /* When using FormData, we do not need to manually set the Content-Type header. The browser will automatically set it to multipart/form-data with the correct boundary. */
+        body: formData // No need to stringify formData
       });
       const data = await response.json();
       console.log("created Post", data);
-      // to display the toast message after navigation to the home page
 
       setPosts([data, ...posts]);
+      // to display the toast message after navigation to the home page
+
       setToastMessage(`Post ${data.title} created successfully`);
       setToastShown(false);
       navigate("/");
@@ -78,11 +83,15 @@ const CreatePost = () => {
       // to display the toast message after navigation to the home page
 
       setToastMessage(error.message || "An error occurred");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <form
+      action="/upload"
+      enctype="multipart/form-data"
       onSubmit={handleCreate}
       className="max-w-sm sm:max-w-lg mx-auto mt-16 pt-4 w-full"
     >
@@ -132,11 +141,11 @@ const CreatePost = () => {
         ></textarea>
 
         <button
-          onClick={handleCreate}
-          type="button"
+          type="submit"
           className="btn rounded-lg mt-8 btn-success w-full"
+          disabled={isSubmitting}
         >
-          Create Post
+          {isSubmitting ? "Create Post..." : "Create Post"}
         </button>
       </fieldset>
     </form>

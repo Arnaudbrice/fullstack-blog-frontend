@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import CreatePost from "./pages/CreatePost";
 import { Route, Routes } from "react-router";
-import { PostContextProvider } from "./contexts/postContext";
+import { PostContextProvider } from "./contexts/PostContext";
 import EditPost from "./pages/EditPost";
 
 const App = () => {

@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import PostContext from "../contexts/postContext";
+import PostContext from "../contexts/PostContext";
 import { toast } from "react-toastify";
 
 import NotFound from "./NotFound";
 
 const EditPost = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const baseUrl = "http://localhost:3000";
   const navigate = useNavigate();
   const { id } = useParams();
@@ -55,6 +56,7 @@ const EditPost = () => {
 
   const handleEdit = async event => {
     event.preventDefault();
+    setIsSubmitting(true);
     try {
       if (!post.title || !post.content) {
         toast.error("Please fill all fields");
@@ -100,6 +102,7 @@ const EditPost = () => {
       // setIsError(true);
     } finally {
       setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -171,9 +174,9 @@ const EditPost = () => {
             onClick={handleEdit}
             type="button"
             className="btn rounded-lg mt-8 btn-success w-full"
+            disabled={isSubmitting}
           >
-            {" "}
-            Update Post
+            {isSubmitting ? "Update Post..." : "Update Post"}
           </button>
         </fieldset>
       </form>
