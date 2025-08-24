@@ -123,63 +123,61 @@ const EditPost = () => {
   //   return <NotFound />;
   // }
   return (
-    <div>
-      <button
-        className="btn bg-gradient-to-r from-yellow-100 via-[#71565a] to-blue-200  mt-16 mx-4"
-        onClick={() => navigate(`/posts/${id}`)}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24"
-          viewBox="0 0 24 24"
-          width="24"
-        >
-          <path d="M0 0h24v24H0V0z" fill="none" />
-          <path d="M21 11H6.83l3.58-3.59L9 6l-6 6 6 6 1.41-1.41L6.83 13H21v-2z" />
-        </svg>
-        Back to Detail Page
-      </button>
-      <form className="max-w-sm sm:max-w-lg mx-auto mt-16 pt-4 w-full">
-        <h2 className="text-center text-2xl text-white font-bold bg-black p-4">
-          Edit Post
-        </h2>
-        <fieldset className="fieldset bg-white shadow-xl rounded-b-box w-full p-4 h-full">
-          <label htmlFor="title" className="label text-black text-md ">
+  
+    <div className="mt-16 flex justify-center">
+      <div className="max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden transition-transform duration-300 hover:scale-105 bg-white">
+        
+        {/* Title with gradient */}
+        <div className="w-full p-6 text-center bg-gradient-to-r from-yellow-100 via-[#71565a] to-blue-200">
+          <h2 className="text-2xl font-bold text-white">Edit Post</h2>
+        </div>
+
+        {/* Form */}
+        <form className="p-6 space-y-4">
+          <label htmlFor="title" className="block text-gray-700 font-semibold">
             Title
           </label>
           <input
-            onChange={handleChange}
-            value={post?.title}
-            name="title"
             type="text"
-            className="input  w-full outline-black border-black"
+            name="title"
             id="title"
-            placeholder="title"
+            value={post.title}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            placeholder="Title"
           />
 
-          <label htmlFor="content" className="label text-black text-md">
+          <label htmlFor="content" className="block text-gray-700 font-semibold">
             Content
           </label>
           <textarea
-            onChange={handleChange}
-            value={post?.content}
             name="content"
-            className="textarea outline-black border-black w-full"
             id="content"
+            value={post.content}
+            onChange={handleChange}
+            rows="6"
+            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
             placeholder="Content"
-            rows="8"
           ></textarea>
 
           <button
+            type="submit"
             onClick={handleEdit}
-            type="button"
-            className="btn rounded-lg mt-8 btn-success w-full"
             disabled={isSubmitting}
+            className="w-full py-2 bg-yellow-400 hover:bg-yellow-500 text-white font-bold rounded-full shadow-md transition-colors duration-300"
           >
-            {isSubmitting ? "Update Post..." : "Update Post"}
+            {isSubmitting ? "Updating..." : "Update Post"}
           </button>
-        </fieldset>
-      </form>
+
+          <button
+            type="button"
+            onClick={() => navigate(`/posts/${id}`)}
+            className="w-full py-2 mt-2 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded-full shadow-md transition-colors duration-300"
+          >
+            Back to Detail
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
