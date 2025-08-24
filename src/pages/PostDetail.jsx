@@ -21,6 +21,7 @@ const PostDetail = () => {
   const post = posts.find(post => post.id === Number(id));
   console.log("post", post);
 
+  //Delete the post:
   const handleDelete = () => {
     console.log("handleDelete");
   };
