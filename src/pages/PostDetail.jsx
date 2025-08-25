@@ -15,18 +15,18 @@ const PostDetail = () => {
     toastShown,
     setToastShown,
     isLoading,
-    setIsLoading,
+    setIsLoading
   } = useContext(PostContext);
   console.log(id);
   console.log("posts", posts);
   //+id , parseInt(id), Number(id)
-  const post = posts.find((post) => post.id === Number(id));
+  const post = posts.find(post => post.id === Number(id));
   console.log("post", post);
 
   //Delete the post:
   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this post?")) {
-      const updatedPosts = posts.filter((p) => p.id !== post.id);
+      const updatedPosts = posts.filter(p => p.id !== post.id);
       setPosts(updatedPosts);
       setToastMessage("Post deleted successfully");
       navigate("/"); // return to homepage (/)
@@ -58,10 +58,9 @@ const PostDetail = () => {
     navigate("/"); //return to homepage (/)
   };
 
- return (
-   <div className="mt-16 flex justify-center">
+  return (
+    <div className="mt-16 flex justify-center">
       <div className="max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden transition-transform duration-300 hover:scale-105 bg-white">
-        
         {/* Title with gradient */}
         <div className="w-full p-6 text-center bg-gradient-to-r from-yellow-100 via-[#71565a] to-blue-200">
           <h2 className="text-3xl font-bold text-white">{post.title}</h2>
@@ -72,7 +71,7 @@ const PostDetail = () => {
           <img
             src={post.cover}
             alt="cover"
-            className="w-full h-96 object-cover transition-transform duration-300 hover:scale-105"
+            className="w-full h-96 aspect-square object-cover transition-transform duration-300 hover:scale-105"
           />
         </figure>
 
@@ -103,9 +102,8 @@ const PostDetail = () => {
             onClick={handleBack}
             className="w-full py-2 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded-lg shadow-md transition-transform duration-300"
           >
-            Back
-         </button>
-
+            Back To Home
+          </button>
         </div>
       </div>
     </div>
