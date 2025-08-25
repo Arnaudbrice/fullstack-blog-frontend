@@ -8,41 +8,36 @@ const CreatePost = () => {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
   const baseUrl = "http://localhost:3000";
-  const {
-    posts,
-    setPosts,
-    setToastMessage,
-    toastShown,
-    setToastShown
-  } = useContext(PostContext);
+  const { posts, setPosts, setToastMessage, toastShown, setToastShown } =
+    useContext(PostContext);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [post, setPost] = useState({
     title: "",
     cover: "",
-    content: null
+    content: null,
   });
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     const { name, type, value } = event.target;
     if (type === "file") {
       const file = event.target.files[0];
 
       if (file) {
-        setPost(prev => ({
+        setPost((prev) => ({
           ...prev,
-          cover: file
+          cover: file,
         }));
       }
     } else {
-      setPost(prev => ({
+      setPost((prev) => ({
         ...prev,
-        [name]: value
+        [name]: value,
       }));
     }
   };
 
-  const handleCreate = async event => {
+  const handleCreate = async (event) => {
     event.preventDefault();
     setIsSubmitting(true);
 
@@ -67,7 +62,7 @@ const CreatePost = () => {
           content: post.content
         }) */
         /* When using FormData, we do not need to manually set the Content-Type header. The browser will automatically set it to multipart/form-data with the correct boundary. */
-        body: formData // No need to stringify formData
+        body: formData, // No need to stringify formData
       });
       const data = await response.json();
       console.log("created Post", data);
@@ -93,13 +88,13 @@ const CreatePost = () => {
       action="/upload"
       enctype="multipart/form-data"
       onSubmit={handleCreate}
-      className="max-w-sm sm:max-w-lg mx-auto mt-16 pt-4 w-full"
+      className="max-w-xl mx-auto mt-16 w-full"
     >
-      <h2 className="text-center text-xl text-white font-bold bg-black p-4">
+      <h2 className="text-center text-xl font-bold text-black bg-[#F9FEAE] rounded-t-lg p-4">
         Create Post
       </h2>
-      <fieldset className="fieldset bg-white shadow-xl rounded-b-box w-full p-4 h-full">
-        <label htmlFor="title" className="label text-black text-lg ">
+      <fieldset className="bg-white shadow-md rounded-b-lg w-full p-6 space-y-4">
+        <label htmlFor="title" className="block text-black font-medium">
           Title
         </label>
         <input
@@ -107,12 +102,12 @@ const CreatePost = () => {
           value={post.title}
           name="title"
           type="text"
-          className="input  w-full outline-black border-black"
+          className="w-full border border-black p-2"
           id="title"
           placeholder="title"
         />
 
-        <label htmlFor="cover" className="label  text-black text-lg">
+        <label htmlFor="cover" className="block text-black font-medium">
           Cover
         </label>
         {/* input type file don't needa value */}
@@ -127,14 +122,14 @@ const CreatePost = () => {
           onChange={handleChange}
         />
 
-        <label htmlFor="content" className="label text-lg text-black ">
+        <label htmlFor="content" className="block text-black font-medium ">
           Content
         </label>
         <textarea
           onChange={handleChange}
           value={post.content}
           name="content"
-          className="textarea outline-black border-black w-full"
+          className="w-full border border-black p-2"
           id="content"
           placeholder="Content"
           rows="8"
@@ -142,7 +137,7 @@ const CreatePost = () => {
 
         <button
           type="submit"
-          className="btn rounded-lg mt-8 btn-success w-full"
+          className="w-full mt-4 px-6 py-3 bg-black text-white rounded-md uppercase tracking-wide hover:opacity-50"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Create Post..." : "Create Post"}

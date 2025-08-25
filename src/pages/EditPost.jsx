@@ -18,7 +18,7 @@ const EditPost = () => {
     toastShown,
     setToastShown,
     isLoading,
-    setIsLoading
+    setIsLoading,
   } = useContext(PostContext);
 
   console.log(id);
@@ -28,33 +28,33 @@ const EditPost = () => {
   const [post, setPost] = useState({
     id: id,
     title: "",
-    content: ""
+    content: "",
   });
 
   /*  useEffect to update the post when the id changes
  if the page is reloaded, the id will be the same
   so we need to update the post to be able to display the correct title and content in the inputs fields */
   useEffect(() => {
-    let findPost = posts.find(post => post.id === Number(id));
+    let findPost = posts.find((post) => post.id === Number(id));
     setPost({
       id: id,
       title: findPost?.title || "",
-      content: findPost?.content || ""
+      content: findPost?.content || "",
     });
   }, [posts, id]);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     console.log("value", value);
-    setPost(prev => {
+    setPost((prev) => {
       return {
         ...prev,
-        [name]: value
+        [name]: value,
       };
     });
   };
 
-  const handleEdit = async event => {
+  const handleEdit = async (event) => {
     event.preventDefault();
     setIsSubmitting(true);
     try {
@@ -65,12 +65,12 @@ const EditPost = () => {
       const response = await fetch(`${baseUrl}/posts/${id}`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           title: post.title,
-          content: post.content
-        })
+          content: post.content,
+        }),
       });
 
       if (!response.ok) {
@@ -80,7 +80,7 @@ const EditPost = () => {
       const data = await response.json();
       console.log(data);
       // find the post in the posts array and update the title and content
-      posts.map(post => {
+      posts.map((post) => {
         if (post.id === data.id) {
           post.title = data.title;
           post.content = data.content;
@@ -123,9 +123,9 @@ const EditPost = () => {
   //   return <NotFound />;
   // }
   return (
-    <div>
+    <div className="max-w-xl mx-auto mt-12 w-full px-4">
       <button
-        className="btn bg-gradient-to-r from-yellow-100 via-[#71565a] to-blue-200  mt-16 mx-4"
+        className="mb-6 inline-flex items-center gap-2 px-4 py-2 border border-black rounded-full uppercase text-sm hover:bg-black hover:text-white transition-colors"
         onClick={() => navigate(`/posts/${id}`)}
       >
         <svg
@@ -140,10 +140,10 @@ const EditPost = () => {
         Back to Detail Page
       </button>
       <form className="max-w-sm sm:max-w-lg mx-auto mt-16 pt-4 w-full">
-        <h2 className="text-center text-2xl text-white font-bold bg-black p-4">
+        <h2 className="text-center text-xl font-bold text-black bg-[#F9FEAE] rounded-t-lg p-4">
           Edit Post
         </h2>
-        <fieldset className="fieldset bg-white shadow-xl rounded-b-box w-full p-4 h-full">
+        <fieldset className="bg-white shadow-md rounded-b-lg w-full p-6 space-y-4">
           <label htmlFor="title" className="label text-black text-md ">
             Title
           </label>
@@ -152,19 +152,19 @@ const EditPost = () => {
             value={post?.title}
             name="title"
             type="text"
-            className="input  w-full outline-black border-black"
+            className="bg-white shadow-md rounded-b-lg w-full p-6 space-y-4"
             id="title"
             placeholder="title"
           />
 
-          <label htmlFor="content" className="label text-black text-md">
+          <label htmlFor="content" className="block text-black font-medium">
             Content
           </label>
           <textarea
             onChange={handleChange}
             value={post?.content}
             name="content"
-            className="textarea outline-black border-black w-full"
+            className="w-full border border-black/70 focus:border-black focus:outline-none p-3 rounded min-h-[180px] resize-y"
             id="content"
             placeholder="Content"
             rows="8"
@@ -173,7 +173,7 @@ const EditPost = () => {
           <button
             onClick={handleEdit}
             type="button"
-            className="btn rounded-lg mt-8 btn-success w-full"
+            className="w-full mt-4 px-6 py-3 bg-black text-white rounded-md uppercase tracking-wide transition-opacity disabled:opacity-40 hover:opacity-50"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Update Post..." : "Update Post"}

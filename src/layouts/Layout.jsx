@@ -8,8 +8,15 @@ import Header from "../components/Header";
 const Layout = () => {
   return (
     <>
-      <div>
+      <div className="min-h-screen grid grid-rows-[auto_1fr_auto] bg-[#E8E8E8]">
         <Header />
+        <main className="row-start-2 row-end-3 pt-4">
+          <div className="max-w-6xl mx-auto px-4">
+            <Outlet />
+          </div>
+        </main>
+
+        <Footer />
 
         <ToastContainer
           className="mt-[9rem] text-lg"
@@ -27,12 +34,6 @@ const Layout = () => {
           transition={Bounce}
         />
       </div>
-
-      <main>
-        <Outlet />
-      </main>
-
-      <Footer />
     </>
   );
 };

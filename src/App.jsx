@@ -9,10 +9,7 @@ import EditPost from "./pages/EditPost";
 
 const App = () => {
   return (
-    <div
-      className="min-h-screen bg-gradient-to-r from-blue-200 via-gray-200 to-yellow-100 w-full grid grid-rows-[auto_1fr_auto]
-        font-['Outfit']  "
-    >
+    <div className="min-h-screen bg-[#E8E8E8] font-['Outfit'] ">
       <PostContextProvider>
         <Routes>
           <Route path="/" element={<Layout />}>

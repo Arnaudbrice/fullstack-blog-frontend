@@ -14,7 +14,7 @@ const Home = () => {
     isLoading,
     setIsLoading,
     isError,
-    setIsError
+    setIsError,
   } = useContext(PostContext);
 
   if (toastMessage) {
@@ -61,11 +61,13 @@ const Home = () => {
   }
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 mx-4  sm:mx-4 mt-24  ">
-      {posts.map(post => (
-        <PostCard key={post.id} post={post} />
-      ))}
-    </div>
+    <section className="max-w-7xl mx-auto px-4 md:px-6 pt-4 pb-10">
+      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4  ">
+        {posts.map((post) => (
+          <PostCard key={post.id} post={post} />
+        ))}
+      </div>
+    </section>
   );
 };
 

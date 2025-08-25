@@ -15,12 +15,12 @@ const PostDetail = () => {
     toastShown,
     setToastShown,
     isLoading,
-    setIsLoading
+    setIsLoading,
   } = useContext(PostContext);
   console.log(id);
   console.log("posts", posts);
   //+id , parseInt(id), Number(id)
-  const post = posts.find(post => post.id === Number(id));
+  const post = posts.find((post) => post.id === Number(id));
   console.log("post", post);
 
   //Delete the post:
@@ -50,11 +50,11 @@ const PostDetail = () => {
     setToastShown(true);
   }
   return (
-    <div className="grid grid-cols-1  max-w-3xl  mt-16 py-4 border-2 border-black   rounded-lg mx-4 sm:mx-auto space-y-4 text-center ">
-      <h2 className="w-full text-xl font-bold truncate text-center p-4">
+    <div className="max-w-3xl mx-4 sm:mx-auto mt-16 bg-white rounded-lg shadow-md overflow-hidden">
+      <h2 className="text-2xl font-semibold text-center px-6 pt-6">
         {post?.title}
       </h2>
-      <figure className="w-full">
+      <figure className="mt-4">
         <img
           className="w-full aspect-square object-cover"
           src={post?.cover}
@@ -62,19 +62,21 @@ const PostDetail = () => {
         />
       </figure>
 
-      <p className="text-black">{post?.content}</p>
+      <p className="px-6 py-8 text-[#333] whitespace-pre-line">
+        {post?.content}
+      </p>
 
-      <div className="px-4 flex justify-between gap-4">
+      <div className="px-6 pb-8 flex gap-4 justify-between">
         <button
           onClick={() => navigate(`/posts/${id}/edit`)}
-          className="btn btn-warning btn-lg rounded-full"
+          className="px-6 py-2 rounded-full border border-black uppercase text-sm hover:bg-black hover:text-white transition-colors"
           type="button"
         >
           Edit
         </button>
 
         <button
-          className="btn btn-lg rounded-full  btn-secondary"
+          className="px-6 py-2 rounded-full bg-black text-white uppercase text-sm hover:opacity-50"
           type="button"
         >
           Delete
