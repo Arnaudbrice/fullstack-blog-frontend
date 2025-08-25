@@ -28,7 +28,7 @@ const Layout = () => {
         />
       </div>
 
-      <main>
+      <main className="bg-[#05090a] bg-[url('https://transparenttextures.com/patterns/black-linen-2.png')] pb-16">
         <Outlet />
       </main>
 

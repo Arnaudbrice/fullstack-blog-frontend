@@ -100,7 +100,7 @@ const CreatePost = () => {
         Create Post
       </h2>
 
-      <fieldset className="fieldset bg-white/70 backdrop-blur-md shadow-xl rounded-b-box w-full p-4 h-full">
+      <fieldset className="fieldset bg-white backdrop-blur-md shadow-xl rounded-b-box w-full p-4 h-full">
         {/* Title input */}
         <label htmlFor="title" className="label text-black text-lg">
           Title
@@ -155,7 +155,7 @@ const CreatePost = () => {
         {/* Submit button */}
         <button
           type="submit"
-          className="btn rounded-lg mt-8 btn-success w-full"
+          className="btn rounded-lg my-2 btn-success w-full"
           disabled={isSubmitting}
         >
           {isSubmitting ? "Create Post..." : "Create Post"}
