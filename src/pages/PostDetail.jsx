@@ -72,7 +72,7 @@ const PostDetail = () => {
         </div>
 
         {/* Buttons */}
-        <div className="px-6 pb-6 flex justify-between gap-4">
+        <div className="px-6 py-[24px] flex justify-between gap-4">
           <button
             onClick={() => navigate(`/posts/${id}/edit`)}
             className="btn btn-warning flex-1 py-2  font-bold rounded-full shadow-md transition-colors duration-300"
