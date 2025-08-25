@@ -7,6 +7,7 @@ const CreatePost = () => {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
   const baseUrl = "http://localhost:3000";
+  //
   const { posts, setPosts, setToastMessage, setToastShown } =
     useContext(PostContext);
 
