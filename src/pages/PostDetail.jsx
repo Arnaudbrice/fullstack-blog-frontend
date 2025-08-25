@@ -13,10 +13,9 @@ const PostDetail = () => {
     setPosts,
     toastMessage,
     setToastMessage,
-    toastShown,
+
     setToastShown,
-    isLoading,
-    setIsLoading
+    isLoading
   } = useContext(PostContext);
   console.log(id);
   console.log("posts", posts);
@@ -29,6 +28,7 @@ const PostDetail = () => {
     if (window.confirm("Are you sure you want to delete this post?")) {
       const updatedPosts = posts.filter(p => p.id !== post.id);
       setPosts(updatedPosts);
+
       setToastMessage("Post deleted successfully");
       setToastShown(false);
 
@@ -74,7 +74,7 @@ const PostDetail = () => {
           <img
             src={post.cover}
             alt="cover"
-            className="w-full h-96 aspect-square object-cover transition-transform duration-300 hover:scale-105"
+            className="w-full h-96 object-cover transition-transform duration-300 hover:scale-105"
           />
         </figure>
 
@@ -108,7 +108,7 @@ const PostDetail = () => {
             onClick={handleBack}
             className="w-full py-2 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded-lg shadow-md transition-transform duration-300"
           >
-            Back To Home
+            Back
           </button>
         </div>
       </div>
