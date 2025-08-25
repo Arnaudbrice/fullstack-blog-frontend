@@ -28,7 +28,7 @@ const PostCard = props => {
           {props.post.content?.substring(0, 20)}...
         </p>
         <button
-          className="btn btn-info text-white"
+          className="btn btn-info rounded-full text-white"
           onClick={() => navigate(`/posts/${props.post.id}`)}
         >
           Read More

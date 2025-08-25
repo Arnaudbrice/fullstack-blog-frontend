@@ -22,6 +22,7 @@ const Home = () => {
     setToastMessage("");
     setToastShown(true);
   }
+
   if (isError) {
     return (
       <div
@@ -59,7 +60,6 @@ const Home = () => {
       </div>
     );
   }
-
   return (
     <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4 mx-4  sm:mx-4 mt-24  ">
       {posts.map(post => (

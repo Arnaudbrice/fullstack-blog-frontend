@@ -1,48 +1,56 @@
 import React, { useContext, useRef, useState } from "react";
+
 import { useNavigate } from "react-router";
-import PostContext from "../contexts/postContext";
+
 import { toast } from "react-toastify";
+import PostContext from "../contexts/PostContext";
 
 const CreatePost = () => {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
   const baseUrl = "http://localhost:3000";
-  //
-  const { posts, setPosts, setToastMessage, setToastShown } =
-    useContext(PostContext);
 
+  const {
+    posts,
+    setPosts,
+    setToastMessage,
+    toastShown,
+    setToastShown
+  } = useContext(PostContext);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [post, setPost] = useState({
     title: "",
     cover: "",
-    content: "",
+    content: null
   });
 
-  const handleChange = (event) => {
-    const { name, type } = event.target;
+  // State for previewing the selected image
+  const [preview, setPreview] = useState(null);
+
+  const handleChange = event => {
+    const { name, type, value, files } = event.target;
 
     if (type === "file") {
-      const file = event.target.files[0];
+      const file = files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          setPost((prev) => ({
-            ...prev,
-            cover: event.target.result, // base64 string
-          }));
-        };
-        reader.readAsDataURL(file);
+        setPost(prev => ({
+          ...prev,
+          cover: file
+        }));
+        setPreview(URL.createObjectURL(file)); // <-- set image preview
       }
     } else {
-      const { value } = event.target;
-      setPost((prev) => ({
+      setPost(prev => ({
         ...prev,
-        [name]: value,
+        [name]: value
       }));
     }
   };
 
-  const handleCreate = async (event) => {
+  const handleCreate = async event => {
     event.preventDefault();
+    setIsSubmitting(true);
 
     try {
       if (!post.title || !post.content || !post.cover) {
@@ -50,35 +58,45 @@ const CreatePost = () => {
         return;
       }
 
+      const formData = new FormData();
+      formData.append("title", post.title);
+      formData.append("cover", post.cover); // Assuming post.cover is a File object
+      formData.append("content", post.content);
+
       const response = await fetch(`${baseUrl}/posts`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: post.title,
-          cover: post.cover,
-          content: post.content,
-        }),
+        body: formData // No need to stringify FormData
       });
+
       const data = await response.json();
+      console.log("created Post", data);
 
       setPosts([data, ...posts]);
-      setToastMessage(`Post ${data.title} created successfully`);
+
+      navigate("/"); // go back to homepage
+      // to display the toast message after navigation to the home page
+      setToastMessage(
+        <div>
+          Post <strong>{data.title}</strong> created successfully
+        </div>
+      );
       setToastShown(false);
-      navigate("/");
     } catch (error) {
       console.log(error);
       setToastMessage(error.message || "An error occurred");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
     <form
+      action="/upload"
+      enctype="multipart/form-data"
       onSubmit={handleCreate}
       className="max-w-sm sm:max-w-lg mx-auto mt-16 pt-4 w-full"
     >
-      <h2 className="bg-gradient-to-r from-yellow-100 via-[#71565a] to-blue-200 rounded-t-2xl text-center text-xl text-white font-bold p-4">
+      <h2 className=" bg-gradient-to-r from-yellow-100 via-[#71565a] to-blue-200 rounded-t-2xl text-center text-xl text-white font-bold p-4">
         Create Post
       </h2>
 
@@ -92,36 +110,36 @@ const CreatePost = () => {
           value={post.title}
           name="title"
           type="text"
-          className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
+          className="w-full input  outline-black border-black"
           id="title"
           placeholder="title"
         />
 
         {/* Cover input */}
-        <label htmlFor="cover" className="label text-black text-lg mt-4">
+        <label htmlFor="cover" className="label text-black text-lg">
           Cover
         </label>
         <input
           type="file"
           accept="image/*"
           ref={fileInputRef}
-          className="file-input w-full"
+          className="file-input w-full  outline-black border-black "
           id="cover"
           name="cover"
           onChange={handleChange}
         />
 
         {/* Image preview */}
-        {post.cover && (
+        {preview && (
           <img
-            src={post.cover}
+            src={preview}
             alt="Preview"
             className="w-full max-h-64 object-cover rounded-md mt-2"
           />
         )}
 
         {/* Content input */}
-        <label htmlFor="content" className="label text-lg text-black mt-4">
+        <label htmlFor="content" className="label text-lg text-black">
           Content
         </label>
         <textarea
@@ -136,10 +154,11 @@ const CreatePost = () => {
 
         {/* Submit button */}
         <button
-          className="btn rounded-lg mt-8 btn-success w-full"
           type="submit"
+          className="btn rounded-lg mt-8 btn-success w-full"
+          disabled={isSubmitting}
         >
-          Create Post
+          {isSubmitting ? "Create Post..." : "Create Post"}
         </button>
       </fieldset>
     </form>
@@ -147,4 +166,3 @@ const CreatePost = () => {
 };
 
 export default CreatePost;
-

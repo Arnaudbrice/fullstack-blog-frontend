@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
-
+import logo from "../assets/logo.png";
 const Header = () => {
   return (
     <header className="shadow-md">
@@ -12,11 +12,11 @@ const Header = () => {
  */}
 
       <nav className="bg-gradient-to-r from-yellow-100 via-[#71565a] to-blue-200">
-        <div className="w-full mx-auto px-6 py-4 ">
-          <ul className="flex justify-between items-center gap-10 text-lg font-medium text-white">
-            <li className="text-2xl md:text-3xl font-bold text-gray-800  mr-none sm:mr-auto">
+        <div className="w-full mx-auto  py-4">
+          <ul className="flex justify-between items-center gap-10 text-lg font-medium text-black px-4">
+            <li className="text-2xl md:text-3xl font-bold text-gray-800  mr-none sm:mr-auto   ">
               <Link to="/" className="hover:text-red-400 transition-colors ">
-                MasterBlog
+                <img src={logo} alt="logo" />
               </Link>
             </li>
             <li>

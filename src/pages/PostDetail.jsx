@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { useNavigate, useParams } from "react-router";
-import PostContext from "../contexts/PostContext";
 import { toast } from "react-toastify";
+import Dialog from "../components/Dialog";
+import PostContext from "../contexts/PostContext";
 import NotFound from "./NotFound";
 
 const PostDetail = () => {
@@ -12,49 +13,27 @@ const PostDetail = () => {
     setPosts,
     toastMessage,
     setToastMessage,
- 
+
     setToastShown,
-    isLoading,
-  
+    isLoading
   } = useContext(PostContext);
+
   console.log(id);
   console.log("posts", posts);
   //+id , parseInt(id), Number(id)
-  const post = posts.find((post) => post.id === Number(id));
+  const post = posts.find(post => post.id === Number(id));
   console.log("post", post);
-
-  //Delete the post:
-  const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete this post?")) return;
-
-    try {
-      const response = await fetch(`http://localhost:3000/posts/${post.id}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) throw new Error("Failed to delete post on server");
-
-      const updatedPosts = posts.filter((p) => p.id !== post.id);
-      setPosts(updatedPosts);
-
-      setToastMessage("Post deleted successfully");
-      navigate("/");
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to delete post. Try again.");
-    }
-  };
 
   if (isLoading) {
     return (
       <div role="status" class="max-w-sm animate-pulse">
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
-        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5"></div>
-        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
-        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-2.5"></div>
-        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-2.5"></div>
-        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
-        <span class="sr-only">Loading...</span>
+        <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5"></div>
+        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-2.5"></div>
+        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-2.5"></div>
+        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
+        <span className="sr-only">Loading...</span>
       </div>
     );
   }
@@ -70,10 +49,9 @@ const PostDetail = () => {
     navigate("/"); //return to homepage (/)
   };
 
- return (
-   <div className="mt-16 flex justify-center">
-      <div className="max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden transition-transform duration-300 hover:scale-105 bg-white">
-        
+  return (
+    <div className="mt-16 flex justify-center">
+      <div className="max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden  bg-white">
         {/* Title with gradient */}
         <div className="w-full p-6 text-center bg-gradient-to-r from-yellow-100 via-[#71565a] to-blue-200">
           <h2 className="text-3xl font-bold text-white">{post.title}</h2>
@@ -97,27 +75,29 @@ const PostDetail = () => {
         <div className="px-6 pb-6 flex justify-between gap-4">
           <button
             onClick={() => navigate(`/posts/${id}/edit`)}
-            className="flex-1 py-2 bg-yellow-400 hover:bg-yellow-500 text-white font-bold rounded-full shadow-md transition-colors duration-300"
+            className="btn btn-warning flex-1 py-2  font-bold rounded-full shadow-md transition-colors duration-300"
           >
             Edit
           </button>
           <button
-            onClick={handleDelete}
-            className="flex-1 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-full shadow-md transition-colors duration-300"
+            // onClick={handleDelete}
+            onClick={() => document.getElementById("my_modal").show()}
+            className="btn btn-error flex-1 py-2  font-bold rounded-full shadow-md transition-colors duration-300"
           >
             Delete
           </button>
+
+          <Dialog id={id} />
         </div>
 
         {/* Back Button */}
         <div className="px-6 pb-6">
           <button
             onClick={handleBack}
-            className="w-full py-2 bg-blue-400 hover:bg-blue-500 text-white font-semibold rounded-lg shadow-md transition-transform duration-300"
+            className="btn btn-info w-full py-2  font-semibold rounded-full shadow-md transition-transform duration-300"
           >
             Back
-         </button>
-
+          </button>
         </div>
       </div>
     </div>
