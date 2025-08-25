@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import PostContext from "../contexts/PostContext";
 import { toast } from "react-toastify";
 import NotFound from "./NotFound";
+import Dialog from "../components/Dialog";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -24,25 +25,27 @@ const PostDetail = () => {
   console.log("post", post);
 
   //Delete the post:
-  const handleDelete = () => {
+  /*   const handleDelete = () => {
     if (window.confirm("Are you sure you want to delete this post?")) {
       const updatedPosts = posts.filter(p => p.id !== post.id);
       setPosts(updatedPosts);
       setToastMessage("Post deleted successfully");
+      setToastShown(false);
+
       navigate("/"); // return to homepage (/)
     }
   };
-
+ */
   if (isLoading) {
     return (
       <div role="status" class="max-w-sm animate-pulse">
-        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
-        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5"></div>
-        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
-        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-2.5"></div>
-        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-2.5"></div>
-        <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
-        <span class="sr-only">Loading...</span>
+        <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px] mb-2.5"></div>
+        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[330px] mb-2.5"></div>
+        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[300px] mb-2.5"></div>
+        <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-700 max-w-[360px]"></div>
+        <span className="sr-only">Loading...</span>
       </div>
     );
   }
@@ -89,11 +92,14 @@ const PostDetail = () => {
             Edit
           </button>
           <button
-            onClick={handleDelete}
+            // onClick={handleDelete}
+            onClick={() => document.getElementById("my_modal").showModal()}
             className="flex-1 py-2 bg-red-500 hover:bg-red-600 text-white font-bold rounded-full shadow-md transition-colors duration-300"
           >
             Delete
           </button>
+
+          <Dialog id={id} />
         </div>
 
         {/* Back Button */}
