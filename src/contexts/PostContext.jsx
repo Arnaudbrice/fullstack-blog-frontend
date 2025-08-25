@@ -18,9 +18,6 @@ export const PostContextProvider = ({ children }) => {
       try {
         const response = await fetch(`${baseUrl}/posts`);
 
-        // if (!response.length) {
-        //   return;
-        // }
         if (!response.ok) {
           throw new Error("Failed to fetch posts");
         }
@@ -43,7 +40,7 @@ export const PostContextProvider = ({ children }) => {
 
   console.log("posts", posts);
 
-  // this is to avoid that the toast message is shown multiple times
+  // this is to avoid that the toast message is shown multiple times on the home page
   useEffect(() => {
     if (toastMessage && !toastShown) {
       toast.success(toastMessage);
