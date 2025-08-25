@@ -12,10 +12,9 @@ const EditPost = () => {
   const { id } = useParams();
   const {
     posts,
-    setPosts,
-    toastMessage,
+ 
     setToastMessage,
-    toastShown,
+  
     setToastShown,
     isLoading,
     setIsLoading

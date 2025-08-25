@@ -12,10 +12,10 @@ const PostDetail = () => {
     setPosts,
     toastMessage,
     setToastMessage,
-    toastShown,
+ 
     setToastShown,
     isLoading,
-    setIsLoading,
+  
   } = useContext(PostContext);
   console.log(id);
   console.log("posts", posts);
@@ -24,12 +24,24 @@ const PostDetail = () => {
   console.log("post", post);
 
   //Delete the post:
-  const handleDelete = () => {
-    if (window.confirm("Are you sure you want to delete this post?")) {
+  const handleDelete = async () => {
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
+
+    try {
+      const response = await fetch(`http://localhost:3000/posts/${post.id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) throw new Error("Failed to delete post on server");
+
       const updatedPosts = posts.filter((p) => p.id !== post.id);
       setPosts(updatedPosts);
+
       setToastMessage("Post deleted successfully");
-      navigate("/"); // return to homepage (/)
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to delete post. Try again.");
     }
   };
 
